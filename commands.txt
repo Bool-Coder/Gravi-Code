@@ -1,2 +1,2 @@
-cc main.c -o game $(pkg-config --libs --cflags raylib)
-./game
+cc src/*.c -Iinclude -o simulator $(pkg-config --libs --cflags raylib) -lm
+./simulator
