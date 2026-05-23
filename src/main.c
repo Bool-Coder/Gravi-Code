@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <stddef.h>
-
+#include <stdio.h>
 #include "config.h"
 #include "planet.h"
 #include "orbit.h"
@@ -11,6 +11,8 @@
 #include "ui.h"
 #include "input.h"
 #include "simulation.h"
+#include "newton-planet.h"
+#include "newton_gravity.h"
 
 int main(void)
 {
@@ -76,9 +78,33 @@ int main(void)
         }
 
         DrawText(TextFormat("Press M for menu"), screenWidth - 260, screenHeight - 90, 15, GRAY);
-        if (scene == 2)
+        if (scene == 3)
+        {
+            UpdateInputBox(&inputNewtonPlanetRadius);
+            UpdateInputBox(&inputNewtonPlanetMass);
+            if (!inputNewtonPlanetRadius.active && !inputNewtonPlanetMass.active)
+            {
+                CreatePlanetOnClick();
+                changeTimeScale();
+            }
+            showTimeScale();
+
+            applyGravity();
+            for (int i = 0; i < newtonPlanetCount; i++)
+            {
+                NewtonPlanetDraw(&newtonPlanets[i]);
+            }
+            printf("%d", newtonPlanetCount);
+            DrawInputBox(&inputNewtonPlanetMass, "PLANET MASS");
+            DrawInputBox(&inputNewtonPlanetRadius, "PLANET RADIUS");
+
+            drawPresets();
+            EndDrawing();
+        }
+        else if (scene == 2)
         {
             showTimeScale();
+
             updateCustomSolarSystem();
             DrawCreateSolarSystemUI();
             drawPresets();

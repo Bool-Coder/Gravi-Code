@@ -41,6 +41,20 @@ InputBox inputPlanetMass =
         "",
         0,
         false};
+
+InputBox inputNewtonPlanetRadius =
+    {
+        {20, 360, 250, 40},
+        "",
+        0,
+        false};
+
+InputBox inputNewtonPlanetMass =
+    {
+        {20, 430, 250, 40},
+        "",
+        0,
+        false};
 void UpdateInputBox(struct InputBox *box)
 {
     Vector2 mouse = GetMousePosition();
