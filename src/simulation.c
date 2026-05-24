@@ -129,7 +129,7 @@ void updateCustomSolarSystem()
     createPlanet();
     for (int i = 0; i < customPlanetCount; i++)
     {
-        PlanetUpdate(&customPlanets[i]);
+        PlanetUpdateKepler(&customPlanets[i]);
     }
     if (customPlanetCount > 0)
         printf("%f\n", customPlanets[0].theta);

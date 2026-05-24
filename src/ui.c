@@ -6,7 +6,6 @@
 #include "input.h"
 #include "simulation.h"
 #include "planet.h"
-#include "newton-planet.h"
 void DrawMainMenu()
 {
     DrawText(TextFormat("Author's: Timofei Filip Emanuel & Bunghez Andrei"), 20, screenHeight - 100, 25, RAYWHITE);
@@ -40,7 +39,7 @@ void DrawMainMenu()
 
     DrawText(
         "GRAVICODE",
-        screenWidth / 2 - 152,
+        screenWidth / 2 - 170,
         120 + sin(GetTime() * 3.0) * 10,
         70,
         WHITE);
@@ -78,27 +77,29 @@ void DrawMainMenu()
         gravityButton.y + 25,
         30,
         WHITE);
+
+    // Newton button
     DrawRectangleRec(
         newtonButton,
-        hoverNewton ? GRAY : LIGHTGRAY);
+        hoverNewton ? DARKGRAY : LIGHTGRAY);
 
     DrawRectangleLinesEx(
         newtonButton,
         3,
         WHITE);
-
     DrawText(
-        "Create solar system",
-        newtonButton.x + 100,
+        "Universal Law Of Gravitation",
+        newtonButton.x + 40,
         newtonButton.y + 25,
         30,
         WHITE);
+
     if (hoverKepler && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
     {
         scene = 1;
     }
 
-    else if (hoverGravity && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+    if (hoverGravity && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
     {
         scene = 2;
         strcpy(inputStarMass.text, "1.989e30");
@@ -109,11 +110,8 @@ void DrawMainMenu()
         strcpy(inputPlanetRadius.text, "6");
         strcpy(inputPlanetMass.text, "5.972e24");
     }
-    else if (hoverNewton && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+    if (hoverNewton && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
     {
-        strcpy(inputNewtonPlanetMass.text, "");
-        strcpy(inputNewtonPlanetRadius.text, "");
-        newtonPlanetCount = 0;
         scene = 3;
     }
 }
@@ -140,14 +138,14 @@ void showTimeScale()
 }
 void drawPresets()
 {
-    DrawText(TextFormat("Distance Scale: 2.5e-9 px/m"), screenWidth - 260, screenHeight - 60, 15, GRAY);
-    DrawText(TextFormat("Gravitational Constant: 6.67430e-11"), screenWidth - 260, screenHeight - 30, 15, GRAY);
+    DrawText(TextFormat("Distance Scale: 2.5e-9 px/m"), screenWidth, screenHeight - 60, 15, GRAY);
+    DrawText(TextFormat("Gravitational Constant: 6.67430e-11"), screenWidth, screenHeight - 30, 15, GRAY);
     DrawText(TextFormat("Press 1 -> 5 for time scale presets"), 20, screenHeight - 30, 15, GRAY);
     DrawText("[1] Real Time", 20, 20, 15, GRAY);
-    DrawText("[2] 1 Day/sec", 20, 45, 15, GRAY);
-    DrawText("[3] 7 Days/sec", 20, 70, 15, GRAY);
-    DrawText("[4] 30 days/sec", 20, 95, 15, GRAY);
-    DrawText("[5] 365 days/sec", 20, 120, 15, GRAY);
+    DrawText("[2] 1 Hour/sec", 20, 45, 15, GRAY);
+    DrawText("[3] 1 Day/sec", 20, 70, 15, GRAY);
+    DrawText("[4] 1 Week/sec", 20, 95, 15, GRAY);
+    DrawText("[5] 1 Month/sec", 20, 120, 15, GRAY);
     DrawText("Press space for next planet", 20, 145, 15, GRAY);
 
     if (scene == 1 && planets[index_in_planets] != NULL)

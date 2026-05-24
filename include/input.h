@@ -20,8 +20,6 @@ extern InputBox inputSemiMajor;
 extern InputBox inputEccentricity;
 extern InputBox inputPlanetRadius;
 extern InputBox inputPlanetMass;
-extern InputBox inputNewtonPlanetMass;
-extern InputBox inputNewtonPlanetRadius;
 void UpdateInputBox(InputBox *box);
 
 void DrawInputBox(
