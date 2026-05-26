@@ -30,7 +30,7 @@ Planet PlanetCreate(
     return p;
 }
 
-void PlanetUpdateKepler(struct Planet *p)
+void PlanetUpdate(struct Planet *p)
 {
     if (p->targetElipse == NULL || p->targetStar == NULL)
         return;

@@ -32,7 +32,7 @@ Planet PlanetCreate(
     Color color,
     char name[]);
 
-void PlanetUpdateKepler(Planet *p);
+void PlanetUpdate(Planet *p);
 
 void PlanetDraw(Planet *p);
 double getPerihelionSpeed(Planet *p);

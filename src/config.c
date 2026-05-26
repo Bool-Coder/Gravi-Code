@@ -14,9 +14,9 @@ const double VISUAL_BOOST = 45.0;
 const float CAMERASPEED = 20.0f;
 
 int scene = 0;
-const int screenWidth = 1400;
-const int screenHeight = 900;
 
+const int screenWidth = 1200;
+const int screenHeight = 880;
 const int TargetFPS = 60;
 
 Vector2 camera_position = {0, 0};

@@ -65,10 +65,36 @@ void CreatePlanetOnClick()
     }
     if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
     {
+        if (atof(inputNewtonPlanetMass.text) == 0 || atof(inputNewtonPlanetRadius.text) == 0)
+            return;
         Vector2 mouse = GetMousePosition();
+        DrawLine(
+            (int)click_position.x,
+            (int)click_position.y,
+            (int)mouse.x,
+            (int)mouse.y,
+            WHITE);
 
-        DrawLine(click_position.x, click_position.y, mouse.x, mouse.y, WHITE);
-        // printf("%f %f %f %f\n", click_position.x, click_position.y, world.x, world.y);
+        DrawCircle(
+            (int)click_position.x,
+            (int)click_position.y,
+            (float)(atof(inputNewtonPlanetRadius.text) * zoom),
+            WHITE);
+        double velocity_x =
+            (click_position.x - mouse.x) / zoom;
+
+        double velocity_y =
+            (click_position.y - mouse.y) / zoom;
+        double speed =
+            sqrt(
+                velocity_x * velocity_x +
+                velocity_y * velocity_y);
+        DrawText(
+            TextFormat("Speed: %f m/s", speed),
+            (int)mouse.x + 10,
+            (int)mouse.y + 10,
+            15,
+            GRAY);
     }
     if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
     {
@@ -84,7 +110,7 @@ void CreatePlanetOnClick()
                     camera_position.y};
         double mass = atof(inputNewtonPlanetMass.text);
         double radius = atof(inputNewtonPlanetRadius.text);
-        printf("%f %f", mass, radius);
+        // printf("%f %f", mass, radius);
         if (mass == 0)
             return;
         if (radius == 0)

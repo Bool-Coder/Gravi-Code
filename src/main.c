@@ -1,7 +1,9 @@
 #include "raylib.h"
+
 #include <stdlib.h>
 #include <time.h>
 #include <stddef.h>
+#include <stdio.h>
 #include "config.h"
 #include "planet.h"
 #include "orbit.h"
@@ -9,10 +11,13 @@
 #include "ui.h"
 #include "input.h"
 #include "simulation.h"
+#include "newton-planet.h"
+#include "newton_gravity.h"
 
 int main(void)
 {
     srand(time(NULL));
+
     Vector2 sunPosition = (Vector2){screenWidth / 2, screenHeight / 2};
     struct Elipse mercury_orbit = ElipseCreate(0.2056, 57.9e9, sunPosition);
     struct Elipse venus_orbit = ElipseCreate(0.0068, 108.2e9, sunPosition);
@@ -73,9 +78,33 @@ int main(void)
         }
 
         DrawText(TextFormat("Press M for menu"), screenWidth - 260, screenHeight - 90, 15, GRAY);
-        if (scene == 2)
+        if (scene == 3)
+        {
+            UpdateInputBox(&inputNewtonPlanetRadius);
+            UpdateInputBox(&inputNewtonPlanetMass);
+            if (!inputNewtonPlanetRadius.active && !inputNewtonPlanetMass.active)
+            {
+                CreatePlanetOnClick();
+                changeTimeScale();
+            }
+            showTimeScale();
+
+            applyGravity();
+            for (int i = 0; i < newtonPlanetCount; i++)
+            {
+                NewtonPlanetDraw(&newtonPlanets[i]);
+            }
+
+            DrawInputBox(&inputNewtonPlanetMass, "PLANET MASS");
+            DrawInputBox(&inputNewtonPlanetRadius, "PLANET RADIUS");
+
+            drawPresets();
+            EndDrawing();
+        }
+        else if (scene == 2)
         {
             showTimeScale();
+
             updateCustomSolarSystem();
             DrawCreateSolarSystemUI();
             drawPresets();
@@ -94,19 +123,19 @@ int main(void)
         else if (scene == 1)
         {
             changeTimeScale();
-            PlanetUpdateKepler(&earth);
-            PlanetUpdateKepler(&sun);
-            PlanetUpdateKepler(&mercury);
-            PlanetUpdateKepler(&venus);
-            PlanetUpdateKepler(&mars);
-            PlanetUpdateKepler(&jupiter);
-            PlanetUpdateKepler(&saturn);
-            PlanetUpdateKepler(&uranus);
-            PlanetUpdateKepler(&neptune);
-            PlanetUpdateKepler(&halley);
+            PlanetUpdate(&earth);
+            PlanetUpdate(&sun);
+            PlanetUpdate(&mercury);
+            PlanetUpdate(&venus);
+            PlanetUpdate(&mars);
+            PlanetUpdate(&jupiter);
+            PlanetUpdate(&saturn);
+            PlanetUpdate(&uranus);
+            PlanetUpdate(&neptune);
+            PlanetUpdate(&halley);
 
             moon_orbit = ElipseCreate(0.0549, 384400000.0, earth.position);
-            PlanetUpdateKepler(&moon);
+            PlanetUpdate(&moon);
 
             drawPresets();
             drawInformationCurrentPlanet();
@@ -136,10 +165,7 @@ int main(void)
             PlanetDraw(&moon);
             PlanetDraw(&halley);
             EndDrawing();
-        }
-        else if (scene == 3)
-        {
-            EndDrawing();
+            continue;
         }
     }
     CloseWindow();

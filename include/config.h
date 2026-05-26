@@ -19,9 +19,10 @@ extern const double TIME_SCALE_PRESET_4;
 extern const double TIME_SCALE_PRESET_5;
 extern int scene;
 
-extern const int screenWidth = 1440;
-extern const int screenHeight = 900;
+extern const int screenWidth;
+extern const int screenHeight;
 
 extern Vector2 camera_position;
 extern float zoom;
+
 #endif

@@ -46,6 +46,6 @@ void applyGravity()
     {
         newtonPlanets[i].position.x += newtonPlanets[i].velocity_x * dt;
         newtonPlanets[i].position.y += newtonPlanets[i].velocity_y * dt;
-        printf("%f %f\n", newtonPlanets[i].position.x, newtonPlanets[i].position.y);
+        // printf("%f %f\n", newtonPlanets[i].position.x, newtonPlanets[i].position.y);
     }
 }
